@@ -1,0 +1,9 @@
+---
+- name: install golang
+  apt: name=golang state=present
+
+- name: go home path
+  lineinfile: dest=~/.bashrc line="export GOPATH=$HOME/gocode"
+
+- name: go bin path
+  lineinfile: dest=~/.bashrc line="export PATH=$HOME/gocode/bin:$PATH"

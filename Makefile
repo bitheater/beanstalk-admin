@@ -4,7 +4,8 @@ github.com/gorilla/mux \
 github.com/tv42/slug
 
 BASE_PATH := $(shell pwd)
-BUILD_PATH := $(BASE_PATH)/dist
+PUBLIC_PATH := $(BASE_PATH)/server/public
+BUILD_PATH := $(PUBLIC_PATH)/dist
 
 GOCMD = go
 GOTEST = $(GOCMD) test
@@ -22,6 +23,9 @@ test: deps
 
 build:
 	$(GOBUILD) beanstalk-admin.go
+
+assets:
+	cd $(PUBLIC_PATH); npm install
 
 install:
 	cp -rf beanstalk-admin /usr/bin/

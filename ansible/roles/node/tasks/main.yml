@@ -1,0 +1,12 @@
+---
+- name: install nodejs
+  apt: name=nodejs state=present
+
+- name: link nodejs to node
+  file: src=/usr/bin/nodejs dest=/usr/bin/node state=link
+
+- name: install npm
+  apt: name=npm state=present
+
+- name: install webpack
+  npm: name=webpack global=yes

@@ -3,4 +3,6 @@
   sudo: yes
   roles:
     - common
+    - beanstalk
     - golang
+    - node

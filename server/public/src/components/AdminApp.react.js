@@ -97,7 +97,7 @@ var AdminApp = React.createClass({
                 <Row>
                     <Col md={3}>
                         <Nav activeKey={this.state.activeKey} bsStyle="pills" stacked onSelect={this.handleSelect}>
-							{options}
+                            {options}
                         </Nav>
                     </Col>
                     <Col md={9}>

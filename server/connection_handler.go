@@ -18,7 +18,7 @@ func connectionStats(w http.ResponseWriter, r *http.Request) {
 		response, _ = json.Marshal(jsonResponse(w, 404, err.Error()))
 	} else {
 		result, _ := c.Stats()
-		response, _ = json.Marshal(jsonResponse(w, 200, result))
+		response, _ = json.Marshal(jsonResponse(w, 200, createStatsSlice(result)))
 		c.Close()
 	}
 
@@ -64,4 +64,18 @@ func jobInfo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Fprint(w, string(response))
+}
+
+func createStatsSlice(stats map[string]string) []map[string]string {
+	resultantStats := []map[string]string{}
+
+	for k, v := range stats {
+		stat := map[string]string{}
+		stat["name"] = k
+		stat["value"] = v
+
+		resultantStats = append(resultantStats, stat)
+	}
+
+	return resultantStats
 }

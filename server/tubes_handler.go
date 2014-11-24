@@ -25,7 +25,7 @@ func tubeStats(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			response, _ = json.Marshal(jsonResponse(w, 404, err.Error()))
 		} else {
-			response, _ = json.Marshal(jsonResponse(w, 200, result))
+			response, _ = json.Marshal(jsonResponse(w, 200, createStatsSlice(result)))
 		}
 
 		c.Close()
@@ -63,17 +63,13 @@ func tubeJobs(w http.ResponseWriter, r *http.Request) {
 		amountJobs = limit
 	}
 
-	jobs := map[string]string{}
+	jobs := []string{}
 	for i := 0; i < amountJobs; i++ {
-		id, body, _ := tubeSet.Reserve(1 * time.Second)
-		jobs[strconv.Itoa(int(id))] = string(body)
+		_, body, _ := tubeSet.Reserve(1 * time.Second)
+		jobs = append(jobs, string(body))
 	}
 
 	response, err = json.Marshal(jsonResponse(w, 200, jobs))
-
-	if err != nil {
-		fmt.Println(err)
-	}
 
 	c.Close()
 

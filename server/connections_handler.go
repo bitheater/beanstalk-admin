@@ -15,11 +15,16 @@ func connections(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, string(jsonResponse))
 }
 
-func instanceNames(connections map[string]*config.Instance) map[string]string {
-	keys := map[string]string{}
+func instanceNames(connections map[string]*config.Instance) []map[string]string {
+	instances := []map[string]string{}
+
 	for k := range connections {
-		keys[slug.Slug(k)] = k
+		instance := map[string]string{}
+		instance["name"] = k
+		instance["realName"] = slug.Slug(k)
+
+		instances = append(instances, instance)
 	}
 
-	return keys
+	return instances
 }

@@ -43,6 +43,18 @@ func configureRouting() {
 	r.HandleFunc("/instances/{name:[a-z0-9-]+}/tubes/{tube}/stats", tubeStats).Methods("GET")
 	r.HandleFunc("/instances/{name:[a-z0-9-]+}/tubes/{tube}/jobs", tubeJobs).Methods("GET")
 
+	r.HandleFunc("/dist/bundle.js", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./server/public/dist/bundle.js")
+	})
+
+	r.HandleFunc("/dist/bundle.js.map", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./server/public/dist/bundle.js.map")
+	})
+
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./server/public/index.html")
+	})
+
 	r.NotFoundHandler = http.HandlerFunc(notFound)
 
 	http.Handle("/", r)
